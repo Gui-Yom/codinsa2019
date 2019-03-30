@@ -8,6 +8,14 @@
     <artifactId>virus</artifactId>
     <version>0.1.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -15,7 +23,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>lyon.codinsa.virus.HelloWorld</mainClass>
+                    <mainClass>lyon.codinsa.virus.IA</mainClass>
                 </configuration>
             </plugin>
         </plugins>
