@@ -45,7 +45,7 @@ public class IA {
             response = game.endTurn();
             System.out.println(game.getToken() + " : " + graph);
             System.out.println("P1: " + game.getId());
-            game.gameWait();
+
             //do {
                 try {
                     Thread.sleep(3000);

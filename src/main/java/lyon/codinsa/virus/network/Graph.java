@@ -7,68 +7,75 @@ import java.util.LinkedList;
 public class Graph {
 
     private HashMap<Integer, Node> map = new HashMap<>();
-    
+
     public Graph(Board board, Visible visible) {
-        for(Node node : board.object.plateau) {
+
+        for (Node node : board.object.plateau) {
             node.setVisible(false);
-            if(node.getOwner() == null) {
+            if (node.getOwner() == null) {
                 node.setOwner(-1);
             }
             map.put(node.getId(), node);
         }
-        for(Node node : visible.object.visible) {
+        for (Node node : visible.object.visible) {
             map.get(node.getId()).setVisible(true);
-            if(node.getOwner() != null) {
+            if (node.getOwner() != null) {
                 map.get(node.getId()).setOwner(node.getOwner());
             }
             map.get(node.getId()).setQtCode(node.getQtCode());
             map.get(node.getId()).setNeighbors(node.getNeighbors());
         }
-        
-        
-            
+
+
     }
-    
+
     public String toString() {
-        String ans = "";
+
+        StringBuilder ans = new StringBuilder();
         for (Node n : map.values()) {
-            ans += map.get(n.getId()).toString() + "\n";
+            ans.append(map.get(n.getId()).toString()).append("\n");
         }
-        return ans;
+        return ans.toString();
     }
 
 
     public Node getNode(Integer id) {
+
         return map.get(id);
     }
 
     public void addNode(Node node) {
+
         map.put(node.getId(), node);
     }
 
     public HashMap<Integer, Node> getMap() {
+
         return map;
     }
 
     public void setMap(HashMap<Integer, Node> map) {
+
         this.map = map;
     }
-    
+
     public LinkedList<Node> getPlayerNodes(Integer id) {
-        LinkedList<Node> nodes = new LinkedList<Node>();
-        for(Node n : map.values()) {
-            if(n.getOwner() != null && n.getOwner().equals(id)) {
+
+        LinkedList<Node> nodes = new LinkedList<>();
+        for (Node n : map.values()) {
+            if (n.getOwner() != null && n.getOwner().equals(id)) {
                 nodes.add(n);
             }
         }
         return nodes;
     }
-    
+
     public HashSet<Node> getTargetableNodes(LinkedList<Node> playerNodes) {
-        HashSet<Node> nodes = new HashSet<Node>();
-        for(Node node : playerNodes) {
-            for(Link link : node.getNeighbors()) {
-                if(!getNode(link.id).getId().equals(node.getId())) {
+
+        HashSet<Node> nodes = new HashSet<>();
+        for (Node node : playerNodes) {
+            for (Link link : node.getNeighbors()) {
+                if (!getNode(link.id).getId().equals(node.getId())) {
                     nodes.add(getNode(link.id));
                 }
             }
