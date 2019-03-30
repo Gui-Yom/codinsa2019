@@ -11,4 +11,12 @@ public class Link {
         this.debit = debit;
     }
 
+    @Override
+    public String toString() {
+
+        return "Link{" +
+               "id=" + id +
+               ", debit=" + debit +
+               '}';
+    }
 }
