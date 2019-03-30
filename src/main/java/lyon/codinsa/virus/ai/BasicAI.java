@@ -5,7 +5,9 @@ import lyon.codinsa.virus.network.Graph;
 import lyon.codinsa.virus.network.Link;
 import lyon.codinsa.virus.network.Node;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class BasicAI extends VirusAI {
 
@@ -15,9 +17,9 @@ public class BasicAI extends VirusAI {
     }
 
     @Override
-    public LinkedList<Action> play(Graph stateUpdate) {
+    public List<Action> play(Graph stateUpdate) {
 
-        LinkedList<Action> attacks = new LinkedList<>();
+        List<Action> attacks = new ArrayList<>();
         LinkedList<Node> myNodes = stateUpdate.getPlayerNodes(id);
         for (Node n : myNodes) {
             for (Link link : n.getNeighbors()) {

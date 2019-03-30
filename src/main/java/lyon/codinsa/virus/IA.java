@@ -1,6 +1,8 @@
 package lyon.codinsa.virus;
 
 import java.util.LinkedList;
+import java.util.List;
+
 import lyon.codinsa.virus.ai.BasicAI;
 import lyon.codinsa.virus.ai.VirusAI;
 import lyon.codinsa.virus.network.Action;
@@ -40,7 +42,7 @@ public class IA {
             Board board = game.getBoard();
             Visible visible = game.getVisible();
             Graph graph = new Graph(board, visible);
-            LinkedList<Action> actions = ai.play(graph);
+            List<Action> actions = ai.play(graph);
             game.play(actions);
             response = game.endTurn();
             System.out.println(game.getToken() + " : " + graph);

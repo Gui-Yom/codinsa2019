@@ -3,7 +3,7 @@ package lyon.codinsa.virus.ai;
 import lyon.codinsa.virus.network.Action;
 import lyon.codinsa.virus.network.Graph;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public abstract class VirusAI {
 
@@ -14,5 +14,5 @@ public abstract class VirusAI {
         id = playerId;
     }
 
-    public abstract LinkedList<Action> play(Graph stateUpdate);
+    public abstract List<Action> play(Graph stateUpdate);
 }
