@@ -1,17 +1,32 @@
 package lyon.codinsa.virus;
 
 import lyon.codinsa.virus.network.Game;
+import lyon.codinsa.virus.network.WaitResponse;
 
 public class IA {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Game game = new Game("I_NSA Lyon", "http://127.0.0.1:8080");
+        String url = "http://127.0.0.1:8080";
+
+        Game game = new Game("I_NSA Lyon", url);
         game.reset();
         game.join();
         System.out.println(game.getToken());
-        game.chooseMap("map0");
-        game.gameWait();
+
+        Game game2 = new Game("I_NSA Lyon 2", url);
+        game2.join();
+        System.out.println(game2.getToken());
+
+        boolean doContinue = true;
+
+        do {
+            WaitResponse response = game.gameWait();
+            doContinue = response.wait.equals("true");
+            Thread.sleep(1000);
+        } while (doContinue);
+
+        System.out.println("Game started !");
     }
 
 }
