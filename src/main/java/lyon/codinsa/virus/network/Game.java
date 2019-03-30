@@ -143,7 +143,6 @@ public class Game {
                 System.err.println(response.code());
                 return null;
             }
-            this.token = parsed.token;
             return parsed;
 
         } catch (IOException e) {
@@ -171,7 +170,6 @@ public class Game {
                 System.err.println(response.code());
                 return null;
             }
-            this.token = parsed.token;
             return parsed;
 
         } catch (IOException e) {
@@ -199,7 +197,6 @@ public class Game {
                 System.err.println(response.code());
                 return null;
             }
-            this.token = parsed.token;
             return parsed;
 
         } catch (IOException e) {
@@ -226,7 +223,6 @@ public class Game {
                 System.err.println(response.code());
                 return null;
             }
-            this.token = parsed.token;
             return parsed;
 
         } catch (IOException e) {
@@ -248,5 +244,9 @@ public class Game {
     public String getToken() {
 
         return token;
+    }
+
+    public void close() {
+
     }
 }

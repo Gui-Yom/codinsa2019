@@ -1,6 +1,7 @@
 package lyon.codinsa.virus;
 
 import lyon.codinsa.virus.network.Game;
+import lyon.codinsa.virus.network.Node;
 import lyon.codinsa.virus.network.WaitResponse;
 
 public class IA {
@@ -18,15 +19,21 @@ public class IA {
         game2.join();
         System.out.println(game2.getToken());
 
+        game.chooseMap("map0");
+
         boolean doContinue = true;
 
         do {
-            WaitResponse response = game.gameWait();
-            doContinue = response.wait.equals("true");
+            doContinue = game.gameWait().wait.equals("true");
             Thread.sleep(1000);
         } while (doContinue);
 
         System.out.println("Game started !");
+
+        for (Node n : game.getBoard().object.plateau)
+        System.out.println(n);
+
+        System.exit(0);
     }
 
 }
