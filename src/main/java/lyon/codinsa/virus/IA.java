@@ -8,6 +8,7 @@ public class IA {
 
         Game game = new Game("I_NSA Lyon", "127.0.0.1:8080");
         //game.join();
+        System.out.println("Check");
     }
 
 }
