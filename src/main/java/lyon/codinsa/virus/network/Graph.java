@@ -11,7 +11,9 @@ public class Graph {
     public Graph(Board board, Visible visible) {
         for(Node node : board.object.plateau) {
             node.setVisible(false);
-            node.setOwner(-1);
+            if(node.getOwner() == null) {
+                node.setOwner(-1);
+            }
             map.put(node.getId(), node);
         }
         for(Node node : visible.object.visible) {
@@ -22,9 +24,17 @@ public class Graph {
             map.get(node.getId()).setQtCode(node.getQtCode());
             map.get(node.getId()).setNeighbors(node.getNeighbors());
         }
-
-        for (Node n : visible.object.visible)
-            System.out.println(map.get(n.getId()));
+        
+        
+            
+    }
+    
+    public String toString() {
+        String ans = "";
+        for (Node n : map.values()) {
+            ans += map.get(n.getId()).toString() + "\n";
+        }
+        return ans;
     }
 
 

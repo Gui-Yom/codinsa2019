@@ -21,7 +21,8 @@ public class BasicAI extends VirusAI {
             for(Link link : n.getNeighbors()) {
                 if(n.getQtCode() > 0) {
                     Integer qt = Math.min(n.getQtCode(), link.debit);
-                    attacks.add(new Action(n.getId(), link.id, qt));
+                    if(n.getQtCode() - qt > 0)
+                        attacks.add(new Action(n.getId(), link.id, qt));
                 }
             }
         }
