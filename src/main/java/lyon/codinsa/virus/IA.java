@@ -9,7 +9,7 @@ public class IA {
         Game game = new Game("I_NSA Lyon", "http://127.0.0.1:8080");
         game.reset();
         game.join();
-        game.chooseMap("map0");
+        game.chooseMap("map0.txt");
         System.out.println(game.getInfo().token);
     }
 
