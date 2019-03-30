@@ -30,10 +30,12 @@ public class Game {
     public boolean join() {
 
         Request req = new Request.Builder()
-            .addHeader("IAName", name)
             .url(url + "/IA/Join")
-            .post(RequestBody.create(JSON, ""))
+            .header("IAName", name)
+            .post(RequestBody.create(MediaType.get("application/x-www-form-urlencoded"), "IAName=" + name))
             .build();
+
+        //System.out.println(req);
 
         try (Response response = http.newCall(req).execute()) {
 
@@ -41,6 +43,7 @@ public class Game {
             if (!jr.status.equals("success")) {
                 System.err.println("Error returned on request : " + req.url());
                 System.err.println("Error : " + jr.error);
+                System.err.println(response.code());
                 return false;
             }
             return true;
@@ -90,6 +93,7 @@ public class Game {
             if (!parsed.status.equals("success")) {
                 System.err.println("Error returned on request : " + req.url());
                 System.err.println("Error : " + parsed.error);
+                System.err.println(response.code());
                 return false;
             }
             return true;
@@ -125,6 +129,27 @@ public class Game {
     }
 
     public Board getBoard() {
+
+        Request req = new Request.Builder()
+            .url(url + "/Get/Board")
+            .header("Token", jr.token)
+            .get()
+            .build();
+
+        try (Response response = http.newCall(req).execute()) {
+
+            Board parsed = gson.fromJson(response.body().string(), Board.class);
+            if (!parsed.status.equals("success")) {
+                System.err.println("Error returned on request : " + req.url());
+                System.err.println("Error : " + parsed.error);
+                System.err.println(response.code());
+                return null;
+            }
+            return parsed;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }

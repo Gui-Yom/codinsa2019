@@ -1,6 +1,8 @@
 package lyon.codinsa.virus.network;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Node {
 
@@ -11,7 +13,7 @@ public class Node {
     private Integer typeBonus;
     private Integer owner;
     private Boolean visible;
-    private ArrayList<Node> neighbors;
+    private List<Link> neighbors;
 
 
     public Node(Integer id, Integer production, Integer qtCode, Boolean isServer, Integer typeBonus, Integer owner) {
@@ -95,12 +97,12 @@ public class Node {
         this.visible = visible;
     }
 
-    public ArrayList<Node> getNeighbors() {
+    public List<Link> getNeighbors() {
 
         return neighbors;
     }
 
-    public void setNeighbors(ArrayList<Node> neighbors) {
+    public void setNeighbors(List<Link> neighbors) {
 
         this.neighbors = neighbors;
     }
