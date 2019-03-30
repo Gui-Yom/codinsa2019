@@ -105,5 +105,18 @@ public class Node {
         this.neighbors = neighbors;
     }
 
+    @Override
+    public String toString() {
 
+        return "Node{" +
+               "id=" + id +
+               ", production=" + production +
+               ", qtCode=" + qtCode +
+               ", isServer=" + isServer +
+               ", typeBonus=" + typeBonus +
+               ", owner=" + owner +
+               ", visible=" + visible +
+               ", neighbors=" + neighbors +
+               '}';
+    }
 }

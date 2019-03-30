@@ -12,12 +12,15 @@ import java.util.List;
 public class Game {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    public static final MediaType FORM = MediaType.get("application/x-www-form-urlencoded");
+
     private String name;
     private String url;
     private OkHttpClient http;
     private Gson gson;
 
-    private JoinResponse jr;
+    private int id;
+    private String token;
 
     public Game(String name, String url) {
 
@@ -30,22 +33,25 @@ public class Game {
     public boolean join() {
 
         Request req = new Request.Builder()
-            .url(url + "/IA/Join")
+            .url(url + "/IA/Join?IAName=" + name)
             .header("IAName", name)
-            .post(RequestBody.create(MediaType.get("application/x-www-form-urlencoded"), "IAName=" + name))
+            .post(RequestBody.create(FORM, "IAName=" + name))
             .build();
 
         //System.out.println(req);
 
         try (Response response = http.newCall(req).execute()) {
 
-            this.jr = gson.fromJson(response.body().string(), JoinResponse.class);
+            JoinResponse jr = gson.fromJson(response.body().string(), JoinResponse.class);
             if (!jr.status.equals("success")) {
                 System.err.println("Error returned on request : " + req.url());
                 System.err.println("Error : " + jr.error);
+                System.err.println("Error msg : " + jr.message);
                 System.err.println(response.code());
                 return false;
             }
+            this.id = jr.id;
+            this.token = jr.token;
             return true;
 
         } catch (IOException e) {
@@ -67,7 +73,7 @@ public class Game {
     public boolean chooseMap(String mapName) {
 
         Request req = new Request.Builder()
-            .url(url + "/Start/ChooseMap")
+            .url(url + "/Start/ChooseMap?Map=" + mapName)
             .header("Map", mapName)
             .get()
             .build();
@@ -93,6 +99,7 @@ public class Game {
             if (!parsed.status.equals("success")) {
                 System.err.println("Error returned on request : " + req.url());
                 System.err.println("Error : " + parsed.error);
+                System.err.println("Error msg : " + parsed.message);
                 System.err.println(response.code());
                 return false;
             }
@@ -104,24 +111,14 @@ public class Game {
         return false;
     }
 
-    public JoinResponse getInfo() {
-
-        return jr;
-    }
-
-    public String getName() {
-
-        return name;
-    }
-
     public boolean play(List<Action> actions) {
 
         for (Action a : actions)
-            a.owner = jr.id;
+            a.owner = id;
 
         Request req = new Request.Builder()
-            .url(url + "/PlayAction")
-            .header("Token", jr.token)
+            .url(url + "/PlayAction?Token=" + token)
+            .header("Token", token)
             .post(RequestBody.create(JSON, gson.toJson(actions)))
             .build();
 
@@ -131,8 +128,8 @@ public class Game {
     public Board getBoard() {
 
         Request req = new Request.Builder()
-            .url(url + "/Get/Board")
-            .header("Token", jr.token)
+            .url(url + "/Get/Board?Token=" + token)
+            .header("Token", token)
             .get()
             .build();
 
@@ -142,6 +139,7 @@ public class Game {
             if (!parsed.status.equals("success")) {
                 System.err.println("Error returned on request : " + req.url());
                 System.err.println("Error : " + parsed.error);
+                System.err.println("Error msg : " + parsed.message);
                 System.err.println(response.code());
                 return null;
             }
@@ -152,5 +150,103 @@ public class Game {
         }
 
         return null;
+    }
+
+    public Visible getVisible() {
+
+        Request req = new Request.Builder()
+            .url(url + "/Get/Visible?Token=" + token)
+            .header("Token", token)
+            .get()
+            .build();
+
+        try (Response response = http.newCall(req).execute()) {
+
+            Visible parsed = gson.fromJson(response.body().string(), Visible.class);
+            if (!parsed.status.equals("success")) {
+                System.err.println("Error returned on request : " + req.url());
+                System.err.println("Error : " + parsed.error);
+                System.err.println("Error msg : " + parsed.message);
+                System.err.println(response.code());
+                return null;
+            }
+            return parsed;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public WaitResponse endTurn() {
+
+        Request req = new Request.Builder()
+            .url(url + "/End/Turn?Token=" + token)
+            .header("Token", token)
+            .post(RequestBody.create(FORM, "Token=" + token))
+            .build();
+
+        try (Response response = http.newCall(req).execute()) {
+
+            WaitResponse parsed = gson.fromJson(response.body().string(), WaitResponse.class);
+            if (!parsed.status.equals("success")) {
+                System.err.println("Error returned on request : " + req.url());
+                System.err.println("Error : " + parsed.error);
+                System.err.println("Error msg : " + parsed.message);
+                System.err.println(response.code());
+                return null;
+            }
+            return parsed;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public WaitResponse gameWait() {
+
+        Request req = new Request.Builder()
+            .url(url + "/Wait?Token=" + token)
+            .header("Token", token)
+            .get()
+            .build();
+
+        try (Response response = http.newCall(req).execute()) {
+
+            WaitResponse parsed = gson.fromJson(response.body().string(), WaitResponse.class);
+            if (!parsed.status.equals("success")) {
+                System.err.println("Error returned on request : " + req.url());
+                System.err.println("Error : " + parsed.error);
+                System.err.println("Error msg : " + parsed.message);
+                System.err.println(response.code());
+                return null;
+            }
+            return parsed;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public String getToken() {
+
+        return token;
+    }
+
+    public void close() {
+
     }
 }
