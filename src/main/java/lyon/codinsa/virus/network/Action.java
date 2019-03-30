@@ -1,8 +1,5 @@
 package lyon.codinsa.virus.network;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Action {
 
     public int owner;
@@ -17,6 +14,7 @@ public class Action {
         this.qtCode = qtCode;
     }
 
+    /*
     public static List<Action> batchCreate(int... values) {
 
         if (values.length % 3 != 0) {
@@ -31,5 +29,6 @@ public class Action {
         }
         return actions;
     }
+    */
 
 }

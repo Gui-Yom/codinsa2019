@@ -29,6 +29,7 @@ public class IA {
 
         System.out.println("Game started !");
         game.startGame();
+        
 
         for (Node n : game.getBoard().object.plateau)
             System.out.println(n);

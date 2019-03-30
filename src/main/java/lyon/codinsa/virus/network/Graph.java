@@ -7,6 +7,10 @@ import java.util.LinkedList;
 public class Graph {
 
     private HashMap<Integer, Node> map;
+    
+    public Graph(Board board, Visible visible) {
+        
+    }
 
 
     public Node getNode(Integer id) {
