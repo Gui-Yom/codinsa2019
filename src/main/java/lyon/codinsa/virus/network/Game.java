@@ -1,13 +1,14 @@
 package lyon.codinsa.virus.network;
 
 import com.google.gson.Gson;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 
 import java.io.IOException;
+import java.util.List;
 
+/**
+ * Point d'entrée de la gestion de l'API du serveur.
+ */
 public class Game {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -31,7 +32,7 @@ public class Game {
         Request req = new Request.Builder()
             .addHeader("IAName", name)
             .url(url + "/IA/Join")
-            .method("POST", null)
+            .post(RequestBody.create(JSON, ""))
             .build();
 
         try (Response response = http.newCall(req).execute()) {
@@ -107,5 +108,24 @@ public class Game {
     public String getName() {
 
         return name;
+    }
+
+    public boolean play(List<Action> actions) {
+
+        for (Action a : actions)
+            a.owner = jr.id;
+
+        Request req = new Request.Builder()
+            .url(url + "/PlayAction")
+            .header("Token", jr.token)
+            .post(RequestBody.create(JSON, gson.toJson(actions)))
+            .build();
+
+        return stdReqCheck(req);
+    }
+
+    public Board getBoard() {
+
+        return null;
     }
 }
