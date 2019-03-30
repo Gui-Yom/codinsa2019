@@ -1,5 +1,6 @@
 package lyon.codinsa.virus.network;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Node {
@@ -11,12 +12,11 @@ public class Node {
     private Integer typeBonus;
     private Integer owner;
     private Boolean visible;
-    private List<Link> neighbors;
+    private List<Link> neighbors = new LinkedList<>();
 
 
     public Node(Integer id, Integer production, Integer qtCode, Boolean isServer, Integer typeBonus, Integer owner) {
 
-        super();
         this.id = id;
         this.production = production;
         this.qtCode = qtCode;

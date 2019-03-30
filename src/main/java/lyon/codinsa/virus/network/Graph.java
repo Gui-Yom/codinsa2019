@@ -6,10 +6,25 @@ import java.util.LinkedList;
 
 public class Graph {
 
-    private HashMap<Integer, Node> map;
+    private HashMap<Integer, Node> map = new HashMap<>();
     
     public Graph(Board board, Visible visible) {
-        
+        for(Node node : board.object.plateau) {
+            node.setVisible(false);
+            node.setOwner(-1);
+            map.put(node.getId(), node);
+        }
+        for(Node node : visible.object.visible) {
+            map.get(node.getId()).setVisible(true);
+            if(node.getOwner() != null) {
+                map.get(node.getId()).setOwner(node.getOwner());
+            }
+            map.get(node.getId()).setQtCode(node.getQtCode());
+            map.get(node.getId()).setNeighbors(node.getNeighbors());
+        }
+
+        for (Node n : visible.object.visible)
+            System.out.println(map.get(n.getId()));
     }
 
 
@@ -32,7 +47,7 @@ public class Graph {
     public LinkedList<Node> getPlayerNodes(Integer id) {
         LinkedList<Node> nodes = new LinkedList<Node>();
         for(Node n : map.values()) {
-            if(n.getOwner().equals(id)) {
+            if(n.getOwner() != null && n.getOwner().equals(id)) {
                 nodes.add(n);
             }
         }

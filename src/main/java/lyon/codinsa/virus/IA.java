@@ -1,7 +1,15 @@
 package lyon.codinsa.virus;
 
+import java.util.LinkedList;
+import lyon.codinsa.virus.ai.BasicAI;
+import lyon.codinsa.virus.ai.VirusAI;
+import lyon.codinsa.virus.network.Action;
+import lyon.codinsa.virus.network.Board;
 import lyon.codinsa.virus.network.Game;
+import lyon.codinsa.virus.network.Graph;
 import lyon.codinsa.virus.network.Node;
+import lyon.codinsa.virus.network.Visible;
+import lyon.codinsa.virus.network.WaitResponse;
 
 public class IA {
 
@@ -20,16 +28,27 @@ public class IA {
 
         //game.chooseMap("map0");
 
-        boolean doContinue = true;
-
         do {
-            doContinue = game.gameWait().wait.equals("true");
             Thread.sleep(1000);
-        } while (doContinue);
+        } while (game.gameWait().wait.equals("true"));
 
         System.out.println("Game started !");
         game.startGame();
         
+        WaitResponse response;
+        VirusAI ai = new BasicAI(game.getId()); // Change AI here
+        do {
+            Board board = game.getBoard();
+            Visible visible = game.getVisible();
+            
+            Graph graph = new Graph(board, visible);
+            LinkedList<Action> actions = ai.play(graph);
+            game.play(actions);
+            response = game.endTurn();
+            do {
+                Thread.sleep(1000);
+            } while (game.gameWait().wait.equals("true"));
+        } while(response.partyEnd.equals("success"));
 
         for (Node n : game.getBoard().object.plateau)
             System.out.println(n);
