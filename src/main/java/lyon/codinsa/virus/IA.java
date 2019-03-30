@@ -7,7 +7,9 @@ public class IA {
     public static void main(String[] args) {
 
         Game game = new Game("I_NSA Lyon", "127.0.0.1:8080");
-        //game.join();
+        game.join();
+        game.chooseMap("map0");
+        game.startGame();
     }
 
 }
