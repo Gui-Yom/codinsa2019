@@ -85,28 +85,38 @@ public class AdvancedAI extends VirusAI {
 	public LinkedList<Action> attack(Graph state, Node source, Integer attackCode) {
 		LinkedList<Action> possibleActions = new LinkedList<>();
 		LinkedList<Action> res = new LinkedList<>();
+                int z = 0;
 		for(Link link : source.getNeighbors()) {
 			Node n = state.getNode(link.id);
 			if (!n.getOwner().equals(id)) {
-                            if (n.getIsServer() && n.getQtCode() <= attackCode)
+                            if (n.getIsServer() && n.getQtCode() < attackCode) {
                                 possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, attackCode), (double) n.getProduction() / 0.001));
-                            else
-                                possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, n.getQtCode() + 20), (double) n.getProduction() / (n.getQtCode()+0.001)));
-			}
-		}
+                                z+= attackCode;
+                            }else {
+                                possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, n.getQtCode() + 1), (double) n.getProduction() / (n.getQtCode()+0.001)));
+                                z += n.getQtCode()+1;
+                            }
+                        }      
+                }
 		Collections.sort(possibleActions, Collections.reverseOrder());
 		int remainingCode = attackCode;
+                if(z < remainingCode) {
+                    int send = Math.floorDiv(remainingCode, source.getNeighbors().size());
+                    for(Link link : source.getNeighbors()) {
+                        res.add(new Action(source.getId(), link.id, Math.min(link.debit, send)));
+                    }
+                }
 		for(Action a : possibleActions) {
 			if(a.qtCode <= remainingCode) {
                             res.add(a);
                             remainingCode -= a.qtCode;
 			}
-                        else if (a == possibleActions.getLast() && a.qtCode-20 <= remainingCode) {
+                        else if (a == possibleActions.getLast() && a.qtCode-1 < remainingCode) {
                             a.qtCode = remainingCode;
                             res.add(a);
                         }
-                        else if (a.qtCode-19 <= remainingCode) {
-                            a.qtCode = a.qtCode-19;
+                        else if (a.qtCode < remainingCode) {
+                            a.qtCode = a.qtCode;
                             res.add(a);
                         }
 			else {
