@@ -33,12 +33,10 @@ public class AdvancedAI extends VirusAI {
 		HashMap<Node,Link> distance = new HashMap<Node, Link>(); 
 		for(Node node : borders)
 		{
-			BFS(distance, node, stateUpdate);
+                    BFS(distance, node, stateUpdate);
 		}
 		for(Node node : stateUpdate.getPlayerNodes(this.id))
 		{
-			System.out.println("qsdqsdsqd");
-			System.out.println(node);
 			if(!borders.contains(node))
 			{
 				possibleActions.add(new Action(node.getId(), distance.get(node).id, node.getQtCode()-1));
@@ -53,7 +51,7 @@ public class AdvancedAI extends VirusAI {
 		toVisit.add(node);
 		currentDistance.put(node, 0);
 		HashSet<Node> visited = new HashSet<Node>();
-		while(!visited.isEmpty())
+		while(!toVisit.isEmpty())
 		{
 			Node src = toVisit.get(0);
 			for(Link l: src.getNeighbors())
@@ -72,13 +70,12 @@ public class AdvancedAI extends VirusAI {
 	
 	public ArrayList<Node> getBorders(Graph stateUpdate){
 		ArrayList<Node> borders = new ArrayList<Node>();
-		for(Integer nodeId : stateUpdate.getMap().keySet())
+		for(Node node : stateUpdate.getPlayerNodes(this.id))
 		{
-			Node node = stateUpdate.getNode(nodeId);
-			if(node.isBorder(stateUpdate))
-			{
-				borders.add(node);
-			}
+                    if(node.isBorder(stateUpdate))
+                    {
+                        borders.add(node);
+                    }
 		}
 		return borders;
 	}
@@ -90,7 +87,7 @@ public class AdvancedAI extends VirusAI {
 		for(Link link : source.getNeighbors()) {
 			Node n = state.getNode(link.id);
 			if (!n.getOwner().equals(id)) {
-				possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, attackCode), (double) n.getProduction() / n.getQtCode()));
+				possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, attackCode), (double) n.getProduction() / (n.getQtCode()+0.001)));
 			}
 		}
 		Collections.sort(possibleActions, Collections.reverseOrder());
