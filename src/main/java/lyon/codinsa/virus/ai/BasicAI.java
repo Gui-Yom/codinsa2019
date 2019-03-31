@@ -23,7 +23,7 @@ public class BasicAI extends VirusAI {
         List<Action> attacks = new ArrayList<>();
         LinkedList<Node> myNodes = stateUpdate.getPlayerNodes(id);
         for (Node n : myNodes) {
-            LinkedList<Link> links = new LinkedList(n.getNeighbors());
+            LinkedList<Link> links = new LinkedList<>(n.getNeighbors());
             Collections.sort(links, (o1, o2) -> {
                 Integer value1 = stateUpdate.getNode(o1.id).getQtCode();
                 Integer value2 = stateUpdate.getNode(o2.id).getQtCode();
