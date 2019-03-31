@@ -182,8 +182,8 @@ public class Game {
     public WaitResponse endTurn() {
 
         Request req = new Request.Builder()
-            .url(url + "/End/Turn?Token=" + token)
-            .header("Token", token)
+            .url(url + "/End/Turn")
+            //.header("Token", token)
             .post(RequestBody.create(FORM, "Token=" + token))
             .build();
 
