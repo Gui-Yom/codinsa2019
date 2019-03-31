@@ -1,6 +1,7 @@
 package lyon.codinsa.virus;
 
 import java.util.List;
+import lyon.codinsa.virus.ai.AdvancedAI;
 
 import lyon.codinsa.virus.ai.BasicAI;
 import lyon.codinsa.virus.ai.VirusAI;
@@ -36,7 +37,7 @@ public class IA {
         game.startGame();
         
         WaitResponse response;
-        VirusAI ai = new BasicAI(game.getId()); // Change AI here
+        VirusAI ai = new AdvancedAI(game.getId()); // Change AI here
         boolean firstTurn = true;
         do {
             Board board = game.getBoard();
