@@ -27,7 +27,7 @@ public class AdvancedAI extends VirusAI {
 		for(Link link : source.getNeighbors()) {
 			Node n = state.getNode(link.id);
 			if (!n.getOwner().equals(id)) {
-				possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, attackCode), n.getProduction() / n.getQtCode()));
+				possibleActions.add(new Action(source.getId(), n.getId(), Math.min(link.debit, attackCode), (double) n.getProduction() / n.getQtCode()));
 			}
 		}
 		Collections.sort(possibleActions, Collections.reverseOrder());

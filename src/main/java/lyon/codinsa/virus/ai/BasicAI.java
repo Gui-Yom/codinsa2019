@@ -1,13 +1,13 @@
 package lyon.codinsa.virus.ai;
 
-import java.util.Collections;
-import java.util.Comparator;
 import lyon.codinsa.virus.network.Action;
 import lyon.codinsa.virus.network.Graph;
 import lyon.codinsa.virus.network.Link;
 import lyon.codinsa.virus.network.Node;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
