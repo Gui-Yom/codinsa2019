@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ArrayList;
 
 import lyon.codinsa.virus.network.*;
@@ -16,9 +17,14 @@ public class AdvancedAI extends VirusAI {
 	
 
 	@Override
-	public LinkedList<Action> play(Graph stateUpdate) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Action> play(Graph stateUpdate) {
+		List<Action> attacks = new ArrayList<>();
+		ArrayList<Node> borders = getBorders(stateUpdate);
+		for(Node n : borders) {
+			attacks.addAll(attack(stateUpdate, n, n.getQtCode()-1));
+		}
+		attacks.addAll(getTransfers(borders,stateUpdate));
+		return attacks;
 	}
 	
 	public LinkedList<Action> getTransfers(ArrayList<Node> borders, Graph stateUpdate)
@@ -31,6 +37,8 @@ public class AdvancedAI extends VirusAI {
 		}
 		for(Node node : stateUpdate.getPlayerNodes(this.id))
 		{
+			System.out.println("qsdqsdsqd");
+			System.out.println(node);
 			if(!borders.contains(node))
 			{
 				possibleActions.add(new Action(node.getId(), distance.get(node).id, node.getQtCode()-1));
