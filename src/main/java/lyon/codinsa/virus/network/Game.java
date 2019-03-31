@@ -141,7 +141,7 @@ public class Game {
                 System.err.println("Error : " + parsed.error);
                 System.err.println("Error msg : " + parsed.message);
                 System.err.println(response.code());
-                return null;
+                return getBoard();
             }
             return parsed;
 
@@ -168,9 +168,9 @@ public class Game {
                 System.err.println("Error : " + parsed.error);
                 System.err.println("Error msg : " + parsed.message);
                 System.err.println(response.code());
-                return null;
+                return getVisible();
             }
-            return parsed;
+            return parsed == null ? getVisible() : parsed;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -195,7 +195,7 @@ public class Game {
                 System.err.println("Error : " + parsed.error);
                 System.err.println("Error msg : " + parsed.message);
                 System.err.println(response.code());
-                return null;
+                return endTurn();
             }
             return parsed;
 
@@ -221,7 +221,7 @@ public class Game {
                 System.err.println("Error : " + parsed.error);
                 System.err.println("Error msg : " + parsed.message);
                 System.err.println(response.code());
-                return null;
+                return gameWait();
             }
             return parsed;
 

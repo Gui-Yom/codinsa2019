@@ -16,7 +16,7 @@ public class IA {
 
         do {
             try {
-                Thread.sleep(250);
+                Thread.sleep(500);
             } catch (InterruptedException e) {}
         } while (game.getTurn() == 0);
 
@@ -40,7 +40,7 @@ public class IA {
                 break;
             do {
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {}
             } while (game.getTurn() == turn);
             turn++;
