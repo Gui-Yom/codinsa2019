@@ -2,6 +2,7 @@ package lyon.codinsa.virus.network;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Node {
 
@@ -111,14 +112,14 @@ public class Node {
     	}
     	for(Link l : this.neighbors)
     	{
-    		Integer mid = l.id;
-    		Node neighbor = graph.getNode(mid);
-    		if(neighbor.getOwner() != this.owner)
-    		{
-    			return false;
-    		}
+            Integer mid = l.id;
+            Node neighbor = graph.getNode(mid);
+            if( !neighbor.getOwner().equals(this.owner))
+            {
+                return true;
+            }
     	}
-    	return true;
+    	return false;
     	
     }
 
