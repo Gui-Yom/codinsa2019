@@ -1,19 +1,19 @@
 package lyon.codinsa.virus.ai;
 
+import java.util.Collections;
+import java.util.Comparator;
 import lyon.codinsa.virus.network.Action;
 import lyon.codinsa.virus.network.Graph;
 import lyon.codinsa.virus.network.Link;
 import lyon.codinsa.virus.network.Node;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BasicAI extends VirusAI {
+public class LessBasicAI extends VirusAI {
 
-    public BasicAI(Integer playerId) {
+    public LessBasicAI(Integer playerId) {
 
         super(playerId);
     }
@@ -46,7 +46,10 @@ public class BasicAI extends VirusAI {
                 }
                 surroundedByFriendlyNodes = false;
                 if (n.getQtCode() > 1) {
-                    Integer qt = Math.min(n.getQtCode()-1, link.debit);
+                   Integer qt = Math.min(Math.min(n.getQtCode()-1, link.debit), stateUpdate.getNode(link.id).getQtCode() + 1);
+                   if(stateUpdate.getNode(link.id).getQtCode() <= 100 && stateUpdate.getNode(link.id).getQtCode() > qt) {
+                       continue;
+                   }
                    attacks.add(new Action(n.getId(), link.id, qt));
                 }
             }
