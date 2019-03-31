@@ -1,6 +1,5 @@
 package lyon.codinsa.virus;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import lyon.codinsa.virus.ai.BasicAI;
@@ -31,17 +30,22 @@ public class IA {
         
         //do {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {}
         //} while (!game.gameWait().wait.equals("true"));
         game.startGame();
         
         WaitResponse response;
         VirusAI ai = new BasicAI(game.getId()); // Change AI here
+        boolean firstTurn = true;
         do {
             Board board = game.getBoard();
             Visible visible = game.getVisible();
             Graph graph = new Graph(board, visible);
+            if(firstTurn) {
+                graph.bfs(graph.getPlayerNodes(game.getId()).get(0).getId());
+                firstTurn = false;
+            }
             List<Action> actions = ai.play(graph);
             game.play(actions);
             response = game.endTurn();
@@ -50,7 +54,7 @@ public class IA {
 
             //do {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {}
             //} while (game.gameWait().wait.equals("true"));
         } while(!response.partyEnd.equals("success"));

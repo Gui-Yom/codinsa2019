@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BasicAI extends VirusAI {
+public class BasicAI_ServerOpti extends VirusAI {
 
-    public BasicAI(Integer playerId) {
+    public BasicAI_ServerOpti(Integer playerId) {
 
         super(playerId);
     }
@@ -40,6 +40,7 @@ public class BasicAI extends VirusAI {
                     return value1 - value2;
                 }
             });
+            boolean waitForServerAttack = false;
             for (Link link : links) {
                 if (stateUpdate.getNode(link.id).getOwner().equals(id)) {
                     continue;
@@ -47,8 +48,17 @@ public class BasicAI extends VirusAI {
                 surroundedByFriendlyNodes = false;
                 if (n.getQtCode() > 1) {
                     Integer qt = Math.min(n.getQtCode()-1, link.debit);
-                   attacks.add(new Action(n.getId(), link.id, qt));
+                    if (stateUpdate.getNode(link.id).getIsServer()) {
+                        if (2*qt < stateUpdate.getNode(link.id).getQtCode()) {
+                            waitForServerAttack = true;
+                            continue;
+                        }
+                    }
+                    attacks.add(new Action(n.getId(), link.id, qt));
                 }
+            }
+            if(waitForServerAttack) {
+                continue;
             }
             if(surroundedByFriendlyNodes) {
                 for (Link link : links) {
