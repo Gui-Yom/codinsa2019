@@ -30,7 +30,7 @@ public class IA {
         
         //do {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {}
         //} while (!game.gameWait().wait.equals("true"));
         game.startGame();
@@ -54,7 +54,7 @@ public class IA {
 
             //do {
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {}
             //} while (game.gameWait().wait.equals("true"));
         } while(!response.partyEnd.equals("success"));
