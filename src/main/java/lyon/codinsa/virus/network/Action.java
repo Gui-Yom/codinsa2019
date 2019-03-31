@@ -6,7 +6,7 @@ public class Action implements Comparable<Action> {
     public int from;
     public int to;
     public int qtCode;
-    public Integer potential = 0;
+    public Double potential = 0.0;
 
     public Action(int from, int to, int qtCode) {
 
@@ -15,7 +15,7 @@ public class Action implements Comparable<Action> {
         this.qtCode = qtCode;
     }
 
-    public Action(int from, int to, int qtCode, Integer potential) {
+    public Action(int from, int to, int qtCode, Double potential) {
 
         this.from = from;
         this.to = to;
