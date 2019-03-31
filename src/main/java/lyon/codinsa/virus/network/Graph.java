@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 
 public class Graph {
 
-    private HashMap<Integer, Node> map = new HashMap<>();
     public static HashMap<Integer, Integer> bfsDirections = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Node> map = new HashMap<>();
 
     public Graph(Board board, Visible visible) {
 
@@ -29,21 +28,22 @@ public class Graph {
             map.get(node.getId()).setNeighbors(node.getNeighbors());
         }
     }
-    
+
     public void bfs(Integer start) {
+
         HashMap<Integer, Integer> visited = new HashMap<Integer, Integer>();
-        for(Map.Entry<Integer, Node> entry : map.entrySet()) {
+        for (Map.Entry<Integer, Node> entry : map.entrySet()) {
             visited.put(entry.getKey(), 0);
             bfsDirections.put(entry.getKey(), 0);
         }
         LinkedList<Integer> queue = new LinkedList<Integer>();
         queue.push(start);
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             Integer nodeId = queue.pop();
             visited.replace(nodeId, 1);
-            for(Link next : map.get(nodeId).getNeighbors()) {
+            for (Link next : map.get(nodeId).getNeighbors()) {
                 bfsDirections.replace(nodeId, next.id);
-                if(visited.get(next.id).equals(0)) {
+                if (visited.get(next.id).equals(0)) {
                     queue.push(next.id);
                 }
             }
