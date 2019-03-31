@@ -104,6 +104,23 @@ public class Node {
 
         this.neighbors = neighbors;
     }
+    
+    public boolean isBorder(Graph graph) {
+    	if(this.owner == -1 || this.owner == 0) {
+    		return false;
+    	}
+    	for(Link l : this.neighbors)
+    	{
+    		Integer mid = l.id;
+    		Node neighbor = graph.getNode(mid);
+    		if(neighbor.getOwner() != this.owner)
+    		{
+    			return false;
+    		}
+    	}
+    	return true;
+    	
+    }
 
     @Override
     public String toString() {
