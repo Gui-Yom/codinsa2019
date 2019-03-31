@@ -1,8 +1,8 @@
 package lyon.codinsa.virus;
 
 import java.util.List;
+import lyon.codinsa.virus.ai.LessBasicAI;
 
-import lyon.codinsa.virus.ai.BasicAI;
 import lyon.codinsa.virus.ai.VirusAI;
 import lyon.codinsa.virus.network.Action;
 import lyon.codinsa.virus.network.Board;
@@ -30,13 +30,13 @@ public class IA {
         
         //do {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {}
         //} while (!game.gameWait().wait.equals("true"));
         game.startGame();
         
         WaitResponse response;
-        VirusAI ai = new BasicAI(game.getId()); // Change AI here
+        VirusAI ai = new LessBasicAI(game.getId()); // Change AI here
         boolean firstTurn = true;
         do {
             Board board = game.getBoard();
@@ -54,7 +54,7 @@ public class IA {
 
             //do {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {}
             //} while (game.gameWait().wait.equals("true"));
         } while(!response.partyEnd.equals("success"));
