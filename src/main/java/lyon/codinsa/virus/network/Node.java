@@ -24,22 +24,23 @@ public class Node {
         this.typeBonus = typeBonus;
         this.owner = owner;
     }
-public boolean isBorder(Graph graph) {
-        if(this.owner == -1 || this.owner == 0) {
-                return false;
+
+    public boolean isBorder(Graph graph) {
+
+        if (this.owner == -1 || this.owner == 0) {
+            return false;
         }
-        for(Link l : this.neighbors)
-        {
+        for (Link l : this.neighbors) {
             Integer mid = l.id;
             Node neighbor = graph.getNode(mid);
-            if( !neighbor.getOwner().equals(this.owner))
-            {
+            if (!neighbor.getOwner().equals(this.owner)) {
                 return true;
             }
         }
         return false;
-    	
+
     }
+
     public Integer getId() {
 
         return id;
