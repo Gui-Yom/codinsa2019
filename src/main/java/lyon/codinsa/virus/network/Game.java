@@ -231,6 +231,24 @@ public class Game {
         return null;
     }
 
+    public int getTurn() {
+
+        Request req = new Request.Builder()
+            .url(url + "/Get/Turn?Token=" + token)
+            .header("Token", token)
+            .get()
+            .build();
+
+        try (Response response = http.newCall(req).execute()) {
+
+            return gson.fromJson(response.body().string(), GetTurnResponse.class).turn;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public String getName() {
 
         return name;
