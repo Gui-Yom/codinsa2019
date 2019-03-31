@@ -16,9 +16,9 @@ public class IA {
 
         do {
             try {
-                Thread.sleep(100);
+                Thread.sleep(250);
             } catch (InterruptedException e) {}
-        } while (!game.gameWait().wait.equals("true"));
+        } while (game.getTurn() == 0);
 
         WaitResponse response;
         VirusAI ai = new LessBasicAI(game.getId()); // Change AI here
@@ -40,7 +40,7 @@ public class IA {
                 break;
             do {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(250);
                 } catch (InterruptedException e) {}
             } while (game.getTurn() == turn);
             turn++;
